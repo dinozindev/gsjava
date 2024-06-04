@@ -9,12 +9,14 @@ import gs.gerenciador.GerenciadorRecibo;
 import gs.gerenciador.GerenciadorRecompensa;
 import gs.gerenciador.GerenciadorReconhecimentoImagem;
 import gs.model.DenunciaPescaIlegal;
+import gs.model.DenunciaPoluicao;
 import gs.model.Doacao;
 import gs.model.EspecieMarinha;
 import gs.model.IlhaLixo;
 import gs.model.Organizacao;
 import gs.model.Recibo;
 import gs.model.Recompensa;
+import gs.model.ReconhecimentoImagem;
 import gs.model.Usuario;
 import gs.gerenciador.GerenciadorUsuario;
 
@@ -29,22 +31,6 @@ public class App {
         GerenciadorIlhaLixo gerenciadorIlhaLixo = new GerenciadorIlhaLixo();
         GerenciadorUsuario gerenciadorUsuario = new GerenciadorUsuario();
         GerenciadorEspecieMarinha gerenciadorEspecie = new GerenciadorEspecieMarinha();
-        
-        // alterar o UML em:
-        // GerenciadorUsuario
-        // Recompensa
-        // GerenciadorRecompensa
-        // Usuario
-        // IlhaLixo
-        // GerenciadorIlhaLixo
-        // GerenciadorDenuncia
-        // DenunciaPescaIlegal
-        // DenunciaPoluicao
-        
-        // oq falta:
-        // alterar cardinalidade 
-        // uuid para denunciaPoluicao, denuncia e denunciaPescaIlegal
-        // DenunciaPoluicao e ReconhecimentoImagem
 
 
         //ORGANIZAÇÃO
@@ -94,10 +80,18 @@ public class App {
         
         IlhaLixo il1 = new IlhaLixo(4001, "25.0343°N, 71.4467°W", "Em andamento", "Grande", "Plástico");
         IlhaLixo il2 = new IlhaLixo(4002, "0.8250°S, 91.1347°W", "Finalizando", "Média", "Plástico e Metais");
+        IlhaLixo il3 = new IlhaLixo(4003, "40.7650°N, 76.4532°W", "Em andamento", "Pequena", "Plástico");
         
         System.out.println("*-* Adicionando ilhas de lixo a lista *-*\n");
         gerenciadorIlhaLixo.adicionarIlha(il1);
         gerenciadorIlhaLixo.adicionarIlha(il2);
+        gerenciadorIlhaLixo.adicionarIlha(il3);
+        
+        gerenciadorIlhaLixo.listarIlhasLixo();
+        
+        System.out.println("*-* Removendo ilha de lixo il3 *-*\n");
+        
+        gerenciadorIlhaLixo.removerIlha(il3);
         
         gerenciadorIlhaLixo.listarIlhasLixo();
         
@@ -141,13 +135,17 @@ public class App {
         
         //USUARIO
         
-        System.out.println("\n============== { USUÁRIO } ==============\n");
+        System.out.println("\n============== { USUÁRIO } ==============");
         
         // cadastro usuario
         Usuario usuario1 = gerenciadorUsuario.cadastrar();
         
+        System.out.println("\n*-* Imprimindo usuário *-*\n");
+        // imprimindo usuario
+        usuario1.imprimirUsuario();
+        
         // tentando deslogar sem estar logado
-        System.out.println("\n*-* Tentando deslogar sem estar logado *-*\n");
+        System.out.println("*-* Tentando deslogar sem estar logado *-*\n");
         gerenciadorUsuario.logout();
         
         // login usuario
@@ -200,7 +198,7 @@ public class App {
         
         // tentando resgatar uma recompensa sem pontos suficientes
         System.out.println("*-* Tentando resgatar uma recompensa sem pontos suficientes *-*\n");
-        gerenciadorRecompensa.obterRecompensaUsuario(usuario1, recompensa4);
+        gerenciadorRecompensa.obterRecompensaUsuario(usuario1, recompensa4, gerenciadorUsuario);
         
         // tentando resgatar uma recompensa com pontos suficientes
         System.out.println("\n*-* Tentando resgatar uma recompensa com pontos suficientes *-*\n");
@@ -208,21 +206,63 @@ public class App {
         usuario1.setPontosUsuario(pontosAtuais);
         
         // resgatando recompensa e adicionando a lista de recompensas do usuário
-        Recompensa recompensaResgatada = gerenciadorRecompensa.obterRecompensaUsuario(usuario1, recompensa3);
+        Recompensa recompensaResgatada = gerenciadorRecompensa.obterRecompensaUsuario(usuario1, recompensa3, gerenciadorUsuario);
         gerenciadorUsuario.adicionarRecompensaUsuario(recompensaResgatada, usuario1);
         
         // listando recompensas obtidas pelo usuario
         gerenciadorUsuario.listarRecompensasUsuario(usuario1);
         
-        System.out.println("\n============== { DENÚNCIA DE PESCA ILEGAL E POLUIÇÃO } ==============\n");
+        System.out.println("\n============== { RECONHECIMENTO DE IMAGEM } ==============\n");
+        
+        // criando reconhecimento de imagem
+        ReconhecimentoImagem ri1 = new ReconhecimentoImagem(6001, "07/06", esp3, "jpg", "imagem_peixe_palhaco", usuario1);
+        
+        // adicionando reconhecimentos a lista
+        
+        gerenciadorRecEspec.adicionarReconhecimento(ri1);
+        
+        // imprime o reconhecimento
+        System.out.println("\n*-* Imprimindo o reconhecimento do peixe-palhaço *-*\n");
+        ri1.imprimirReconhecimento();
+        
+        gerenciadorRecEspec.visualizarInformacoesEspecie(ri1);
+        
+        System.out.println("============== { DENÚNCIA DE PESCA ILEGAL E POLUIÇÃO } ==============\n");
         
         // realiza denuncia de pesca ilegal
         DenunciaPescaIlegal dpi = gerenciadorDenuncia.realizarDenunciaPescaIlegal(usuario1, gerenciadorUsuario);
         
         // imprime denuncia de pesca ilegal
+        System.out.println("*-* Informações da denúncia de pesca ilegal *-*\n");
         dpi.imprimirDenuncia();
         
+        // a cada denuncia feita, o usuario recebe 10 pontos
+        System.out.println("\nPontos totais do usuário: "+ usuario1.getPontosUsuario());
+        
+        // adicionando a denuncia a lista de denuncias
         gerenciadorDenuncia.cadastrarDenuncia(dpi);
+        
+        // realiza denuncia de poluição
+        DenunciaPoluicao dpo = gerenciadorDenuncia.realizarDenunciaPoluicao(usuario1, gerenciadorUsuario);
+        
+        // imprime denuncia de pesca poluição
+        System.out.println("*-* Informações da denúncia de poluição *-*\n");
+        dpo.imprimirDenuncia();
+        
+        // a cada denuncia feita, o usuario recebe 10 pontos acrescentados ao que ele já tem.
+        System.out.println("Pontos totais do usuário: "+ usuario1.getPontosUsuario());
+        
+        // adicionando a denuncia a lista de denuncias
+        gerenciadorDenuncia.cadastrarDenuncia(dpo);
+        
+        // listando denuncias
+        gerenciadorDenuncia.listarDenuncias();
+        
+        // sai do sistema
+        gerenciadorUsuario.logout();
+        
+        
+        
 
 
 

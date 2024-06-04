@@ -20,7 +20,7 @@ public class Usuario {
     	this.senhaUsuario = senhaUsuario;
     	this.valorDoado = 0;
     	this.pontosUsuario = 0;
-    	recompensasObtidas = new ArrayList<Recompensa>();
+    	this.recompensasObtidas = new ArrayList<Recompensa>();
     }
 
 	public String getCpfUsuario() {

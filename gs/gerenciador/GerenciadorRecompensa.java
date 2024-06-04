@@ -14,6 +14,11 @@ public class GerenciadorRecompensa {
         recompensas.add(recompensa);
         System.out.println("Recompensa adicionada com sucesso.");
     }
+    
+    public void removerRecompensa(Recompensa recompensa) {
+    	recompensas.remove(recompensa);
+    	System.out.println("Recompensa removida com sucesso.");
+    }
 
     public void listarRecompensas() {
     	System.out.println("\n*-* LISTA DE RECOMPENSAS *-*\n");
@@ -26,13 +31,13 @@ public class GerenciadorRecompensa {
     	return recompensas;
     }
     
-    public Recompensa obterRecompensaUsuario(Usuario usuario, Recompensa recompensa) {
+    public Recompensa obterRecompensaUsuario(Usuario usuario, Recompensa recompensa, GerenciadorUsuario gu) {
     	if (recompensa.getPontoNecessario() > usuario.getPontosUsuario()) {
     		System.out.println("Você não tem pontos suficientes para resgatar a recompensa.");
     		return null;
     	} else {
-    		int pontosAtuais = usuario.getPontosUsuario() - recompensa.getPontoNecessario();
-    		usuario.setPontosUsuario(pontosAtuais);
+    		int pontosRestantes = gu.subtrair(usuario.getPontosUsuario(), recompensa.getPontoNecessario());
+    		usuario.setPontosUsuario(pontosRestantes);
     		System.out.println("Recompensa resgatada com sucesso.");
     		return recompensa;
     	}

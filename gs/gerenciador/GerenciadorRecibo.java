@@ -13,6 +13,7 @@ public class GerenciadorRecibo {
     }
 
     public void adicionarRecibo(Recibo recibo) {
+    	System.out.println("Recibo adicionado com sucesso.");
         listaRecibos.add(recibo);
     }
     
@@ -29,7 +30,7 @@ public class GerenciadorRecibo {
     public void listarRecibos() {
     	System.out.println("\n*-* LISTA DE RECIBOS *-*\n");
         for (Recibo recibo : listaRecibos) {
-            recibo.imprimirRecibo(recibo);
+            recibo.imprimirRecibo();
         }
     }
     

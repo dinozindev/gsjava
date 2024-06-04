@@ -18,9 +18,14 @@ public class GerenciadorIlhaLixo {
         listaIlhas.add(ilha);
     }
     
+    public void removerIlha(IlhaLixo ilha) {
+    	System.out.println("Ilha de lixo removida com sucesso.");
+    	listaIlhas.remove(ilha);
+    }
+    
     public void adicionarOrganizacaoColaboradora(Organizacao organizacao, IlhaLixo ilhaLixo) {
     	ilhaLixo.getOrganizacoesAssociadas().add(organizacao);
-    	System.out.println("Colaborador adicionado a ilha de lixo.");
+    	System.out.println("Organização colaboradora adicionada a ilha de lixo.");
     }
     
     public void listarOrganizacoesIlhaLixo(IlhaLixo ilhaLixo) {

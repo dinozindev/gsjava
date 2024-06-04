@@ -1,28 +1,30 @@
 package gs.model;
 
+import java.util.UUID;
+
 public class DenunciaPoluicao extends Denuncia{
-	private int idPoluicao;
+	private String idPoluicao;
 	private String tipoPoluicao;
 	private String quantidadePoluicao;
 	private String oceanoPoluicao;
 	
-	public DenunciaPoluicao(int idDenuncia, String pontoReferencia, String coordenadasDenuncia, String descricaoDenuncia, Usuario usuario, int idPoluicao, String tipoPoluicao, String quantidadePoluicao, String oceanoPoluicao) {
+	public DenunciaPoluicao(String idDenuncia, String pontoReferencia, String coordenadasDenuncia, String descricaoDenuncia, Usuario usuario, String tipoPoluicao, String quantidadePoluicao, String oceanoPoluicao) {
 		super(idDenuncia, pontoReferencia, coordenadasDenuncia, descricaoDenuncia, usuario);
-		this.idPoluicao = idPoluicao;
+		this.idPoluicao = UUID.randomUUID().toString();
 		this.tipoPoluicao = tipoPoluicao;
 		this.quantidadePoluicao = quantidadePoluicao;
 		this.oceanoPoluicao = oceanoPoluicao;
 	}
 	
 	public DenunciaPoluicao() {
-		
+		this.idPoluicao = UUID.randomUUID().toString();
 	}
 
-	public int getIdPoluicao() {
+	public String getIdPoluicao() {
 		return idPoluicao;
 	}
 
-	public void setIdPoluicao(int idPoluicao) {
+	public void setIdPoluicao(String idPoluicao) {
 		this.idPoluicao = idPoluicao;
 	}
 
@@ -57,7 +59,7 @@ public class DenunciaPoluicao extends Denuncia{
 		System.out.println("ID_Poluição: " + getIdPoluicao());
 		System.out.println("Tipo da poluição: " + getTipoPoluicao());
 		System.out.println("Quantidade de poluição: " + getQuantidadePoluicao());
-		System.out.println("Oceano em que ocorreu: " + getOceanoPoluicao());
+		System.out.println("Oceano em que ocorreu: " + getOceanoPoluicao() + "\n");
 	}
 	
 	

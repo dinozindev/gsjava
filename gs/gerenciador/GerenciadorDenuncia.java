@@ -14,16 +14,40 @@ import gs.model.Usuario;
 public class GerenciadorDenuncia {
     private ArrayList<Denuncia> denuncias;
     private ArrayList<String> tiposPesca;
+    private ArrayList<String> tiposPoluicao;
+    private ArrayList<String> oceanos;
+    private ArrayList<String> qtnd;
     private Scanner scanner;
 
     public GerenciadorDenuncia() {
         this.denuncias = new ArrayList<Denuncia>();
         this.tiposPesca = new ArrayList<String>();
-        this.tiposPesca.add("Pesca em Áreas Protegidas");
-        this.tiposPesca.add("Pesca de Espécies Protegidas");
-        this.tiposPesca.add("Uso de Equipamentos Proibidos");
-        this.tiposPesca.add("Pesca Fora de Temporada");
-        this.tiposPesca.add("Captura Excedendo Limites de Quantidade");
+        // adicionando tipos de pesca
+        tiposPesca.add("Pesca em Áreas Protegidas");
+        tiposPesca.add("Pesca de Espécies Protegidas");
+        tiposPesca.add("Uso de Equipamentos Proibidos");
+        tiposPesca.add("Pesca Fora de Temporada");
+        tiposPesca.add("Captura Excedendo Limites de Quantidade");
+        this.tiposPoluicao = new ArrayList<String>();
+        // adicionando tipos de poluição
+        tiposPoluicao.add("Plástico");
+        tiposPoluicao.add("Vazamento de óleo");
+        tiposPoluicao.add("Descarte de esgoto");
+        tiposPoluicao.add("Produtos químicos");
+        this.oceanos = new ArrayList<String>();
+        // adicionando oceanos
+        oceanos.add("Oceano Índico");
+        oceanos.add("Oceano Antártico");
+        oceanos.add("Oceano Pacífico");
+        oceanos.add("Oceano Atlântico");
+        oceanos.add("Oceano Ártico");
+        this.qtnd = new ArrayList<String>();
+        // adicionando qtnd de poluição
+        qtnd.add("Pequena");
+        qtnd.add("Baixa");
+        qtnd.add("Média");
+        qtnd.add("Alta");
+        qtnd.add("Alarmante");
         this.scanner = new Scanner(System.in);
     }
 
@@ -37,20 +61,27 @@ public class GerenciadorDenuncia {
     	denuncias.add(denunciaPoluicao);
     	System.out.println("\nDenúncia de Poluição adicionada a lista com sucesso!\n");
     }
+    
+    // exemplo de sobrecarga
+    public void removerDenuncia(DenunciaPescaIlegal denunciaPesca) {
+    	denuncias.remove(denunciaPesca);
+    	System.out.println("\nDenúncia de Pesca Ilegal removida da lista com sucesso!");
+    }
+    
+    public void removerDenuncia(DenunciaPoluicao denunciaPoluicao) {
+    	denuncias.remove(denunciaPoluicao);
+    	System.out.println("\nDenúncia de Poluicao removida da lista com sucesso!");
+    }
 
     public void listarDenuncias() {
+    	System.out.println("\n*-* LISTA DE DENÚNCIAS *-*\n");
         for (Denuncia denuncia : denuncias) {
         	denuncia.imprimirDenuncia();
         }
     }
-
-    public Denuncia buscarDenunciaPorId(int idDenuncia) {
-        for (Denuncia denuncia : denuncias) {
-            if (denuncia.getIdDenuncia() == idDenuncia) {
-                return denuncia;
-            }
-        }
-        return null;
+    
+    public ArrayList<Denuncia> retornarDenuncias() {
+    	return denuncias;
     }
     
     public DenunciaPescaIlegal realizarDenunciaPescaIlegal(Usuario usuario, GerenciadorUsuario gu) {
@@ -92,11 +123,14 @@ public class GerenciadorDenuncia {
     	            }
     	     }
     		while (true) {
-    			System.out.print("Qual o tipo de pesca ilegal identificado? (ex: Captura Excedendo Limites de Quantidade): ");
+    			for (String tipoPesca : tiposPesca) {
+    				System.out.println("- " + tipoPesca);
+    			}
+    			System.out.print("\nQual o tipo de pesca ilegal identificado?: ");
     			String inputTipoPesca = scanner.nextLine();
     			boolean tipoCorreto = false;
     			for (String tipoPesca : tiposPesca) {
-    				if (inputTipoPesca.equals(tipoPesca)) {
+    				if (inputTipoPesca.equalsIgnoreCase(tipoPesca)) {
     					denunciaPescaIlegal.setTipoPescaIlegal(inputTipoPesca);
     					tipoCorreto = true;
     					break;
@@ -105,7 +139,7 @@ public class GerenciadorDenuncia {
     			if (tipoCorreto == true) {
     				break;
     			} else {
-    				System.out.println("Tipo de pesca ilegal incorreto.");
+    				System.out.println("\nTipo de pesca ilegal incorreto.\n");
     			}
     		} 
     		while (true) {
@@ -130,5 +164,101 @@ public class GerenciadorDenuncia {
     	} 
     	System.out.println("\nDenúncia registrada com sucesso!\n");
     	return denunciaPescaIlegal;
-    }	
- }
+    }
+    
+    public DenunciaPoluicao realizarDenunciaPoluicao(Usuario usuario, GerenciadorUsuario gu) {
+    	System.out.println("\n*-* INICIANDO DENÚNCIA DE POLUIÇÃO *-*\n");
+    	DenunciaPoluicao denunciaPoluicao = new DenunciaPoluicao();
+    	Pattern regexCoordenadas = Pattern.compile("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)\\s*,\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$");
+    	while (true) {
+    		if (gu.getUsuarioLogado() != usuario) {
+    			System.out.println("Você não está logado. Realize o login primeiro.");
+    			break;
+    		} else {
+    			usuario.setPontosUsuario(gu.somar(usuario.getPontosUsuario(), 10));
+    			denunciaPoluicao.setUsuario(usuario);
+    		}
+    		while (true) {
+    			for (String tipoPoluicao : tiposPoluicao) {
+    				System.out.println("- " + tipoPoluicao);
+    			}
+    			System.out.print("\nQual o tipo de poluição identificada?: ");
+    			String inputTipoPoluicao = scanner.nextLine();
+    			boolean tipoCorreto = false;
+    			for (String tipoPoluicao : tiposPoluicao) {
+    				if (inputTipoPoluicao.equalsIgnoreCase(tipoPoluicao)) {
+    					denunciaPoluicao.setTipoPoluicao(inputTipoPoluicao);
+    					tipoCorreto = true;
+    					break;
+    				}
+    			}
+    			if (tipoCorreto == true) {
+    				break;
+    			} else {
+    				System.out.println("\nTipo de poluição incorreto.\n");
+    			}
+    		}
+    		while (true) {
+    			for (String oceano : oceanos) {
+    				System.out.println("- " + oceano);
+    			}
+    			System.out.print("\nEm qual oceano foi identificada a poluição?: ");
+    			String inputOceano = scanner.nextLine();
+    			boolean oceanoCorreto = false;
+    			for (String oceano : oceanos) {
+    				if (inputOceano.equalsIgnoreCase(oceano)) {
+    					denunciaPoluicao.setOceanoPoluicao(oceano);
+    					oceanoCorreto = true;
+    					break;
+    				}
+    			}
+    			if (oceanoCorreto == true) {
+    				break;
+    			} else {
+    				System.out.println("\nOceano incorreto.\n");
+    			}
+    		}
+    		while (true) {
+    			for (String quantidade : qtnd) {
+    				System.out.println("- " + quantidade);
+    			}
+    			System.out.print("\nQual o nível da quantidade de poluição encontrada?: ");
+    			String inputQtnd = scanner.nextLine();
+    			boolean qtndCorreto = false;
+    			for (String quantidade : qtnd) {
+    				if (inputQtnd.equalsIgnoreCase(quantidade)) {
+    					denunciaPoluicao.setQuantidadePoluicao(quantidade);
+    					qtndCorreto = true;
+    					break;
+    				}
+    			}
+    			if (qtndCorreto == true) {
+    				break;
+    			} else {
+    				System.out.println("\nQuantidade incorreta.\n");
+    			}
+    		}
+    		while (true) {
+    			System.out.print("Quais as coordenadas em que a poluição foi encontrada? (ex: 37.7749, -122.4194): ");
+    	        String inputCoordenadas = scanner.nextLine();
+    	        Matcher matcherCoordenadas = regexCoordenadas.matcher(inputCoordenadas);
+    	        if (matcherCoordenadas.matches()) {
+    	        	denunciaPoluicao.setCoordenadasDenuncia(inputCoordenadas);
+    	        	break;
+    	        } else {
+    	        	System.out.println("Coordenadas inválidas.");
+    	            continue;
+    	        }
+    		}
+    		System.out.println("Qual o ponto de referência?: ");
+    		String inputReferencia = scanner.nextLine();
+    		denunciaPoluicao.setPontoReferencia(inputReferencia);
+    		System.out.println("Mais alguma observação?: ");
+    		String inputDescricao = scanner.nextLine();
+    		denunciaPoluicao.setDescricaoDenuncia(inputDescricao);
+    		break;
+    	}
+    	System.out.println("\nDenúncia registrada com sucesso!\n");
+    	return denunciaPoluicao;
+    }
+}

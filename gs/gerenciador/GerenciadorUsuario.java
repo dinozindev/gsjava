@@ -124,8 +124,8 @@ public class GerenciadorUsuario {
     
     // exemplo de sobrecarga
     // metodo operacional que soma os pontos atuais do usuario + pontos recebidos
-    public int somar(int pontosAdicionais, int pontosAtuais) {
-    		return pontosAdicionais += pontosAtuais;
+    public int somar(int pontosAtuais, int pontosAdicionais) {
+    		return pontosAtuais += pontosAdicionais;
     }
     
     // metodo operacional que soma o valor doado atual do usuario + valor novo
@@ -133,9 +133,14 @@ public class GerenciadorUsuario {
     		return valorDoadoAtual += valorDoadoAdicional;
     }
     
+    // método operacional que subtrai os pontos atuais do usuario
+    public int subtrair(int pontosAtuais, int pontosASeremRemovidos) {
+    		return pontosAtuais -= pontosASeremRemovidos;
+    }
+    
     public void adicionarRecompensaUsuario(Recompensa recompensa, Usuario usuario) {
     	if (usuario.getEmailUsuario() != usuarioLogado.getEmailUsuario() || usuarioLogado == null) {
-    		System.out.println("Você não está logado. Veículo não foi adicionado a sua lista.");
+    		System.out.println("Você não está logado. Recompensa não foi adicionada a sua lista.");
     	} else {
     		usuario.getRecompensasObtidas().add(recompensa);
     		setUsuarioLogado(usuario);

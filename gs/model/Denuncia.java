@@ -1,14 +1,16 @@
 package gs.model;
 
+import java.util.UUID;
+
 public class Denuncia {
-    private int idDenuncia;
+    private String idDenuncia;
     private String pontoReferencia;
     private String coordenadasDenuncia;
     private String descricaoDenuncia;
     private Usuario usuario;
 
-    public Denuncia(int idDenuncia, String pontoReferencia, String coordenadasDenuncia, String descricaoDenuncia, Usuario usuario) {
-        this.idDenuncia = idDenuncia;
+    public Denuncia(String idDenuncia, String pontoReferencia, String coordenadasDenuncia, String descricaoDenuncia, Usuario usuario) {
+        this.idDenuncia = UUID.randomUUID().toString();
         this.pontoReferencia = pontoReferencia;
         this.coordenadasDenuncia = coordenadasDenuncia;
         this.descricaoDenuncia = descricaoDenuncia;
@@ -16,14 +18,14 @@ public class Denuncia {
     }
 
     public Denuncia() {
-
+    	this.idDenuncia = UUID.randomUUID().toString();
     }
 
-    public int getIdDenuncia() {
+    public String getIdDenuncia() {
         return idDenuncia;
     }
 
-    public void setIdDenuncia(int idDenuncia) {
+    public void setIdDenuncia(String idDenuncia) {
         this.idDenuncia = idDenuncia;
     }
 

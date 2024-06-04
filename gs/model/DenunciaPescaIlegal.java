@@ -1,28 +1,30 @@
 package gs.model;
 
+import java.util.UUID;
+
 public class DenunciaPescaIlegal extends Denuncia {
-	private int idPescaIlegal;
+	private String idPescaIlegal;
 	private String tipoPescaIlegal;
 	private String horaPescaIlegal;
 	private String dataPescaIlegal;
 
-	public DenunciaPescaIlegal(int idDenuncia, String pontoReferencia, String coordenadasDenuncia, String descricaoDenuncia, Usuario usuario,  int idPescaIlegal, String tipoPescaIlegal, String horaPescaIlegal, String dataPescaIlegal) {
+	public DenunciaPescaIlegal(String idDenuncia, String pontoReferencia, String coordenadasDenuncia, String descricaoDenuncia, Usuario usuario,  int idPescaIlegal, String tipoPescaIlegal, String horaPescaIlegal, String dataPescaIlegal) {
 		super(idDenuncia, pontoReferencia, coordenadasDenuncia, descricaoDenuncia, usuario);
-		this.idPescaIlegal = idPescaIlegal;
+		this.idPescaIlegal = UUID.randomUUID().toString();
 		this.tipoPescaIlegal = tipoPescaIlegal;
 		this.horaPescaIlegal = horaPescaIlegal;
 		this.dataPescaIlegal = dataPescaIlegal;
 	}
 	
 	public DenunciaPescaIlegal() {
-		
+		this.idPescaIlegal = UUID.randomUUID().toString();
 	}
 
-	public int getIdPescaIlegal() {
+	public String getIdPescaIlegal() {
 		return idPescaIlegal;
 	}
 
-	public void setIdPescaIlegal(int idPescaIlegal) {
+	public void setIdPescaIlegal(String idPescaIlegal) {
 		this.idPescaIlegal = idPescaIlegal;
 	}
 
@@ -57,7 +59,7 @@ public class DenunciaPescaIlegal extends Denuncia {
 		System.out.println("ID_Pesca: " + getIdPescaIlegal());
 		System.out.println("Tipo de Pesca Ilegal: " + getTipoPescaIlegal());
 		System.out.println("Horário: " + getHoraPescaIlegal());
-		System.out.println("Data: " + getDataPescaIlegal());
+		System.out.println("Data: " + getDataPescaIlegal() + "\n");
 	}
 	
 	

@@ -1,40 +1,41 @@
 package gs.gerenciador;
 
-import gs.model.EspecieMarinha;
+import gs.model.ReconhecimentoImagem;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class GerenciadorReconhecimentoImagem {
 
-    private List<EspecieMarinha> listaEspecies;
+    private ArrayList<ReconhecimentoImagem> reconhecimentos;
 
     public GerenciadorReconhecimentoImagem() {
-        this.listaEspecies = new ArrayList<>();
+        this.reconhecimentos = new ArrayList<ReconhecimentoImagem>();
     }
 
-    public void adicionarEspecie(EspecieMarinha especie) {
-        listaEspecies.add(especie);
+    public void adicionarReconhecimento(ReconhecimentoImagem ri) {
+    	System.out.println("Reconhecimento de imagem adicionado com sucesso.");
+        reconhecimentos.add(ri);
+    }
+    
+    public void removerReconhecimento(ReconhecimentoImagem ri) {
+    	System.out.println("Reconhecimento de imagem removido com sucesso.");
+        reconhecimentos.add(ri);
+    }
+    
+    public void listarReconhecimentos() {
+    	System.out.println("\n*-* LISTA DE RECONHECIMENTOS *-*\n");
+    	for (ReconhecimentoImagem ri : reconhecimentos) {
+    		ri.imprimirReconhecimento();
+    	}
+    }
+    
+    public void visualizarInformacoesEspecie(ReconhecimentoImagem ri) {
+    	System.out.println("\n*-* IMPRIMINDO INFORMAÇÕES DA ESPÉCIE IDENTIFICADA *-*\n");
+    	ri.getEspecieIdentificada().imprimirEspecieMarinha();
+    }
+    
+    public ArrayList<ReconhecimentoImagem> retornarReconhecimentos() {
+    	return reconhecimentos;
     }
 
-    public void reconhecerEspecie(EspecieMarinha especie) {
-        if (especie.isStatusConservacao()) {
-            System.out.println("A espécie " + especie.getNomeEspecie() + " está em risco de extinção.");
-        } else {
-            System.out.println("A espécie " + especie.getNomeEspecie() + " não está em risco de extinção.");
-        }
-
-        if (especie.getDescricaoEspecie().contains("rara")) {
-            System.out.println("A espécie " + especie.getNomeEspecie() + " é considerada rara.");
-        } else if (especie.getDescricaoEspecie().contains("endêmica")) {
-            System.out.println("A espécie " + especie.getNomeEspecie() + " é considerada endêmica.");
-        } else {
-            System.out.println("A espécie " + especie.getNomeEspecie() + " não tem um status de conservação especial.");
-        }
-    }
-
-    public void listarEspecies() {
-        for (EspecieMarinha especie : listaEspecies) {
-            especie.imprimirEspecieMarinha();
-        }
-    }
 }
