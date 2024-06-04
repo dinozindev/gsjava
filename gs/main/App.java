@@ -8,6 +8,7 @@ import gs.gerenciador.GerenciadorOrganizacao;
 import gs.gerenciador.GerenciadorRecibo;
 import gs.gerenciador.GerenciadorRecompensa;
 import gs.gerenciador.GerenciadorReconhecimentoImagem;
+import gs.model.DenunciaPescaIlegal;
 import gs.model.Doacao;
 import gs.model.EspecieMarinha;
 import gs.model.IlhaLixo;
@@ -36,9 +37,14 @@ public class App {
         // Usuario
         // IlhaLixo
         // GerenciadorIlhaLixo
+        // GerenciadorDenuncia
+        // DenunciaPescaIlegal
+        // DenunciaPoluicao
         
         // oq falta:
-        // Denuncia e ReconhecimentoImagem
+        // alterar cardinalidade 
+        // uuid para denunciaPoluicao, denuncia e denunciaPescaIlegal
+        // DenunciaPoluicao e ReconhecimentoImagem
 
 
         //ORGANIZAÇÃO
@@ -208,12 +214,15 @@ public class App {
         // listando recompensas obtidas pelo usuario
         gerenciadorUsuario.listarRecompensasUsuario(usuario1);
         
-        System.out.println("\n============== { RECONHECIMENTO DE IMAGEM } ==============\n");
+        System.out.println("\n============== { DENÚNCIA DE PESCA ILEGAL E POLUIÇÃO } ==============\n");
         
+        // realiza denuncia de pesca ilegal
+        DenunciaPescaIlegal dpi = gerenciadorDenuncia.realizarDenunciaPescaIlegal(usuario1, gerenciadorUsuario);
         
+        // imprime denuncia de pesca ilegal
+        dpi.imprimirDenuncia();
         
-        
-
+        gerenciadorDenuncia.cadastrarDenuncia(dpi);
 
 
 

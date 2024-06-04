@@ -60,10 +60,10 @@ public class Denuncia {
 	}
 
 	public void imprimirDenuncia() {
-    	System.out.println("ID: " + getIdDenuncia());
+    	System.out.println("ID_Denúncia: " + getIdDenuncia());
     	System.out.println("Coordenadas: " + getCoordenadasDenuncia());
     	System.out.println("Ponto de referência: " + getPontoReferencia());
     	System.out.println("Descrição: " + getDescricaoDenuncia());
-    	System.out.println("Usuário: " + getUsuario().getNomeUsuario() + "\n");
+    	System.out.println("Usuário: " + getUsuario().getNomeUsuario());
     }
 }

@@ -13,6 +13,10 @@ public class DenunciaPoluicao extends Denuncia{
 		this.quantidadePoluicao = quantidadePoluicao;
 		this.oceanoPoluicao = oceanoPoluicao;
 	}
+	
+	public DenunciaPoluicao() {
+		
+	}
 
 	public int getIdPoluicao() {
 		return idPoluicao;

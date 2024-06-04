@@ -13,6 +13,10 @@ public class DenunciaPescaIlegal extends Denuncia {
 		this.horaPescaIlegal = horaPescaIlegal;
 		this.dataPescaIlegal = dataPescaIlegal;
 	}
+	
+	public DenunciaPescaIlegal() {
+		
+	}
 
 	public int getIdPescaIlegal() {
 		return idPescaIlegal;

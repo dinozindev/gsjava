@@ -46,7 +46,7 @@ public class Recibo {
         System.out.println("Data de emissão: " + recibo.getDataRecibo());
         System.out.println("------------------------------------");
         System.out.println("Hora de emissão: " + recibo.getHoraRecibo());
-        System.out.println("------------------------------------");
+        System.out.println("------------------------------------\n");
     }
     
 }
